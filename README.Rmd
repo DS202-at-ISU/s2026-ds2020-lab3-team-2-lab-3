@@ -137,8 +137,8 @@ Each team member picks one of the statements in the FiveThirtyEight [analysis](h
 ```{r}
 head(deaths)
 
-deaths%>%
-  summarise(total_deaths= colSums(Death=="YES"))
+deaths%>% filter(Death== "YES") %>%
+  nrow()
 ```
 
 
