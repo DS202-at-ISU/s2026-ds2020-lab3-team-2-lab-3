@@ -184,6 +184,11 @@ head(deaths)
 
 deaths%>% filter(Death== "YES") %>%
   nrow()
+#89 deaths checks out
+
+returns %>% filter(Return=="YES") %>%
+  nrow()
+#57 returns doesn't check out
 ```
 
 
