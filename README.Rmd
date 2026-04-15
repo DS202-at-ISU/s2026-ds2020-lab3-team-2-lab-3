@@ -86,17 +86,62 @@ Include at least one sentence discussing the result of your fact-checking endeav
 #Person 2
 Each team member picks one of the statements in the FiveThirtyEight [analysis](https://fivethirtyeight.com/features/avengers-death-comics-age-of-ultron/) and fact checks it based on the data. Use dplyr functionality whenever possible.
 
-### FiveThirtyEight Statement
+### FiveThirtyEight Statement: There’s a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife, but only a 50 percent chance they recovered from a second or third death.
 
 > Quote the statement you are planning to fact-check.
 
 ### Include the code
+# join deaths and returns
+```{r}
+av2 <- av %>%
+  mutate(id = row_number())
+deaths2 <- av2 %>%
+  pivot_longer(
+    cols = Death1:Death5,
+    names_to = "Time",
+    values_to = "Death"
+  ) %>%
+  mutate(
+    Time = parse_number(Time),
+    Death = tolower(Death)
+  )
 
+returns2 <- av2 %>%
+  pivot_longer(
+    cols = Return1:Return5,
+    names_to = "Time",
+    values_to = "Return"
+  ) %>%
+  mutate(
+    Time = parse_number(Time),
+    Return = tolower(Return)
+  )
+
+death_return <- deaths2 %>%
+  left_join(returns2, by = c("id", "Time"))
+
+fact_check <- death_return %>%
+  filter(Death == "yes", Time %in% c(1, 2, 3)) %>%
+  mutate(group = case_when(
+    Time == 1 ~ "first death",
+    Time %in% c(2, 3) ~ "second or third death"
+  )) %>%
+  group_by(group) %>%
+  summarise(
+    total_deaths = n(),
+    total_returns = sum(Return == "yes", na.rm = TRUE),
+    recovery_rate = total_returns / total_deaths
+  )
+
+fact_check
+```
 Make sure to include the code to derive the (numeric) fact for the statement
 
 ### Include your answer
 
 Include at least one sentence discussing the result of your fact-checking endeavor.
+
+Based on my analysis, the statement is not supported by my results. The recovery rate after a first death is 80%, while the recovery rate after a second or third death is 83.33%. This means the chance of returning after a second or third death is not lower than the chance of returning after a first death, so the statement is incorrect according to my calculation.
 
 #Person 3
 Each team member picks one of the statements in the FiveThirtyEight [analysis](https://fivethirtyeight.com/features/avengers-death-comics-age-of-ultron/) and fact checks it based on the data. Use dplyr functionality whenever possible.
