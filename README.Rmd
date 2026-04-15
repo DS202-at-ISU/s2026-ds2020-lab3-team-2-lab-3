@@ -29,7 +29,26 @@ av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/av
 head(av)
 
 library(tidyverse)
+
+deaths <- av %>%
+  pivot_longer(cols = starts_with("Death"),
+               names_to = "Time",
+               values_to = "Death") %>%
+  mutate(Time = parse_number(Time)) %>%
+  filter(Death != "")
+
+head(deaths)
+
+deaths_per_avenger <- deaths %>%
+  group_by(Name.Alias) %>%
+  summarise(total_deaths = n())
+
+avg_deaths <- deaths_per_avenger %>%
+  summarise(average_deaths = mean(total_deaths))
+
+avg_deaths
 ```
+
 
 Get the data into a format where the five columns for Death[1-5] are replaced by two columns: Time, and Death. Time should be a number between 1 and 5 (look into the function `parse_number`); Death is a categorical variables with values "yes", "no" and "". Call the resulting data set `deaths`. 
 
