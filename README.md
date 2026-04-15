@@ -127,6 +127,35 @@ between 1 and 5 (look into the function `parse_number`); Death is a
 categorical variables with values “yes”, “no” and ““. Call the resulting
 data set `deaths`.
 
+``` r
+returns <- av %>%
+  pivot_longer(
+    cols = Return1:Return5,
+    names_to = "Time",
+    values_to = "Return"
+  ) %>%
+  mutate(Time = parse_number(Time))
+returns
+```
+
+    ## # A tibble: 1,557 × 14
+    ##    URL                Name.Alias Appearances Current. Gender Probationary.Introl
+    ##    <chr>              <chr>            <int> <chr>    <chr>  <chr>              
+    ##  1 http://marvel.wik… "Henry Jo…        1269 YES      MALE   ""                 
+    ##  2 http://marvel.wik… "Henry Jo…        1269 YES      MALE   ""                 
+    ##  3 http://marvel.wik… "Henry Jo…        1269 YES      MALE   ""                 
+    ##  4 http://marvel.wik… "Henry Jo…        1269 YES      MALE   ""                 
+    ##  5 http://marvel.wik… "Henry Jo…        1269 YES      MALE   ""                 
+    ##  6 http://marvel.wik… "Henry Jo…        1269 YES      MALE   ""                 
+    ##  7 http://marvel.wik… "Henry Jo…        1269 YES      MALE   ""                 
+    ##  8 http://marvel.wik… "Henry Jo…        1269 YES      MALE   ""                 
+    ##  9 http://marvel.wik… "Henry Jo…        1269 YES      MALE   ""                 
+    ## 10 http://marvel.wik… "Janet va…        1165 YES      FEMALE ""                 
+    ## # ℹ 1,547 more rows
+    ## # ℹ 8 more variables: Full.Reserve.Avengers.Intro <chr>, Year <int>,
+    ## #   Years.since.joining <int>, Honorary <chr>, Death1 <chr>, Notes <chr>,
+    ## #   Time <dbl>, Return <chr>
+
 Similarly, deal with the returns of characters.
 
 Based on these datasets calculate the average number of deaths an
@@ -144,17 +173,36 @@ possible.
 
 ### FiveThirtyEight Statement
 
-> Quote the statement you are planning to fact-check.
+> Quote the statement you are planning to fact-check. “Given the
+> Avengers’ 53 years in operation and overall mortality rate, fans of
+> the comics can expect one current or former member to die every seven
+> months or so, with a permanent death occurring once every 20 months.”
 
 ### Include the code
 
 Make sure to include the code to derive the (numeric) fact for the
 statement
 
+``` r
+total_deaths <- deaths %>%
+  filter(Death == "YES") %>%
+  nrow()
+
+years <- 53
+months <- years * 12
+months_per_death <- months / total_deaths
+
+months_per_death
+```
+
+    ## [1] 7.146067
+
 ### Include your answer
 
 Include at least one sentence discussing the result of your
-fact-checking endeavor.
+fact-checking endeavor. The data shows that the average time between
+deaths is about X months, which is pretty close to the claim of one
+death every seven months, so the statement is pretty accurate.
 
 \#Person 2 Each team member picks one of the statements in the
 FiveThirtyEight
