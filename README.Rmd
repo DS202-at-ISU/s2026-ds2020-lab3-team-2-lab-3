@@ -143,6 +143,6 @@ Make sure to include the code to derive the (numeric) fact for the statement
 
 ### Include your answer
 
-Include at least one sentence discussing the result of your fact-checking endeavor.
+The sum of 89 deaths does make sense, however, based on our tables we made, there are 77 returns, not 57
 
 Upload your changes to the repository. Discuss and refine answers as a team.
