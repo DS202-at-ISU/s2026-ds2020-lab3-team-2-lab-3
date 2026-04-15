@@ -115,6 +115,7 @@ Include at least one sentence discussing the result of your fact-checking endeav
 #Person 3: Alyvia Fager
 Each team member picks one of the statements in the FiveThirtyEight [analysis](https://fivethirtyeight.com/features/avengers-death-comics-age-of-ultron/) and fact checks it based on the data. Use dplyr functionality whenever possible.
 
+
 ### FiveThirtyEight Statement
 
 > "Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team"
@@ -127,7 +128,7 @@ av |>
 
 ### Include your answer
 
-# 
+# In order to verify this statement I used count on the variable 'Death1'. This variables contains the total number of avengers and categorizes them by if they have died at least once. Looking at the output, I totalled the "NO" and "YES" categories, which was 173 avengers. I then verified that 69 have died at least once by looking at the "YES" category of count. Therefore, this statement is verified and accurate.
 
 #Person 4
 Each team member picks one of the statements in the FiveThirtyEight [analysis](https://fivethirtyeight.com/features/avengers-death-comics-age-of-ultron/) and fact checks it based on the data. Use dplyr functionality whenever possible.
